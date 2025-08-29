@@ -8,44 +8,220 @@
     <meta name="generator" content="Quiz Generator - Multiaxis Intelligence">
     <title>CNC Manufacturing Fundamentals</title>
     <style>
-        /* --- your styles unchanged --- */
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; margin: 0; padding: 20px; background: linear-gradient(135deg, #5B9BD5 0%, #2C5282 100%); min-height: 100vh; }
-        .quiz-container { background: white; padding: 30px; border-radius: 15px; margin: 20px auto; max-width: 900px; box-shadow: 0 20px 60px rgba(0,0,0,0.3); }
-        h1 { color: #2C5282; text-align: center; margin-bottom: 10px; }
-        .quiz-description { text-align: center; color: #666; margin-bottom: 10px; }
-        .quiz-meta { text-align: center; color: #999; font-size: 14px; margin-bottom: 20px; }
-        .timer-display { text-align: center; font-size: 24px; color: #2C5282; font-weight: bold; margin: 15px 0; padding: 10px; background: #f0f4ff; border-radius: 8px; display: none; }
-        .timer-display.warning { color: #ffc107; background: #fff3cd; }
-        .timer-display.danger { color: #dc3545; background: #f8d7da; }
-        .quiz-question { margin: 20px 0; padding: 20px; background: #f8f9fa; border-radius: 10px; border-left: 4px solid #5B9BD5; }
-        .quiz-question h4 { color: #2C5282; margin-bottom: 15px; }
-        .difficulty-badge { display: inline-block; padding: 2px 8px; border-radius: 12px; font-size: 12px; font-weight: bold; margin-left: 10px; }
-        .difficulty-easy { background: #d4edda; color: #155724; }
-        .difficulty-medium { background: #fff3cd; color: #856404; }
-        .difficulty-hard { background: #f8d7da; color: #721c24; }
-        .question-image { width: 100%; max-width: 600px; height: auto; margin: 20px auto; display: block; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
-        .quiz-options { margin: 15px 0; }
-        .quiz-option { display: block; margin: 10px 0; padding: 15px; background: white; border: 2px solid #e2e8f0; border-radius: 8px; cursor: pointer; transition: all 0.3s; }
-        .quiz-option:hover { background: #f0f4ff; border-color: #5B9BD5; transform: translateX(5px); }
-        .quiz-option.selected { background: #f0f4ff; border-color: #5B9BD5; font-weight: 600; }
-        .quiz-button { background: linear-gradient(135deg, #5B9BD5 0%, #2C5282 100%); color: white; padding: 12px 30px; border: none; border-radius: 25px; font-size: 16px; font-weight: 600; cursor: pointer; margin: 10px 5px; transition: transform 0.2s; }
-        .quiz-button:hover { transform: scale(1.05); }
-        .quiz-button:disabled { background: #ccc; cursor: not-allowed; transform: scale(1); }
-        .quiz-results { padding: 30px; background: linear-gradient(135deg, #f0f4ff 0%, #e8ecff 100%); border-radius: 15px; margin: 20px 0; display: none; }
-        .quiz-score { font-size: 28px; color: #2C5282; font-weight: bold; text-align: center; margin: 20px 0; }
-        .quiz-progress { background: #e2e8f0; height: 30px; border-radius: 15px; overflow: hidden; margin: 20px 0; }
-        .quiz-progress-bar { background: linear-gradient(90deg, #5B9BD5 0%, #2C5282 100%); height: 100%; width: 0%; transition: width 0.5s; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; }
-        .result-item { margin: 15px 0; padding: 15px; border-radius: 8px; }
-        .result-item.correct { background: #d4edda; border-left: 4px solid #28a745; }
-        .result-item.incorrect { background: #f8d7da; border-left: 4px solid #dc3545; }
-        .certificate { background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%); border: 3px solid #ffd700; border-radius: 15px; padding: 40px; margin: 30px auto; max-width: 600px; text-align: center; display: none; }
-        .certificate h2 { color: #2C5282; margin-bottom: 20px; }
-        .certificate-name { font-size: 28px; font-weight: bold; color: #2C5282; margin: 20px 0; }
-        .certificate-score { font-size: 24px; color: #155724; margin: 15px 0; }
-        .footer { text-align: center; margin-top: 30px; padding-top: 20px; border-top: 1px solid #e2e8f0; color: #666; font-size: 12px; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #5B9BD5 0%, #2C5282 100%);
+            min-height: 100vh;
+        }
+        .quiz-container {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin: 20px auto;
+            max-width: 900px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        h1 {
+            color: #2C5282;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+        .quiz-description {
+            text-align: center;
+            color: #666;
+            margin-bottom: 10px;
+        }
+        .quiz-meta {
+            text-align: center;
+            color: #999;
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+        .timer-display {
+            text-align: center;
+            font-size: 24px;
+            color: #2C5282;
+            font-weight: bold;
+            margin: 15px 0;
+            padding: 10px;
+            background: #f0f4ff;
+            border-radius: 8px;
+            display: none;
+        }
+        .timer-display.warning {
+            color: #ffc107;
+            background: #fff3cd;
+        }
+        .timer-display.danger {
+            color: #dc3545;
+            background: #f8d7da;
+        }
+        .quiz-question {
+            margin: 20px 0;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border-left: 4px solid #5B9BD5;
+        }
+        .quiz-question h4 {
+            color: #2C5282;
+            margin-bottom: 15px;
+        }
+        .difficulty-badge {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: bold;
+            margin-left: 10px;
+        }
+        .difficulty-easy {
+            background: #d4edda;
+            color: #155724;
+        }
+        .difficulty-medium {
+            background: #fff3cd;
+            color: #856404;
+        }
+        .difficulty-hard {
+            background: #f8d7da;
+            color: #721c24;
+        }
+        .question-image {
+            width: 100%;
+            max-width: 600px;
+            height: auto;
+            margin: 20px auto;
+            display: block;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .quiz-options {
+            margin: 15px 0;
+        }
+        .quiz-option {
+            display: block;
+            margin: 10px 0;
+            padding: 15px;
+            background: white;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .quiz-option:hover {
+            background: #f0f4ff;
+            border-color: #5B9BD5;
+            transform: translateX(5px);
+        }
+        .quiz-option.selected {
+            background: #f0f4ff;
+            border-color: #5B9BD5;
+            font-weight: 600;
+        }
+        .quiz-button {
+            background: linear-gradient(135deg, #5B9BD5 0%, #2C5282 100%);
+            color: white;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 25px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            margin: 10px 5px;
+            transition: transform 0.2s;
+        }
+        .quiz-button:hover {
+            transform: scale(1.05);
+        }
+        .quiz-button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: scale(1);
+        }
+        .quiz-results {
+            padding: 30px;
+            background: linear-gradient(135deg, #f0f4ff 0%, #e8ecff 100%);
+            border-radius: 15px;
+            margin: 20px 0;
+            display: none;
+        }
+        .quiz-score {
+            font-size: 28px;
+            color: #2C5282;
+            font-weight: bold;
+            text-align: center;
+            margin: 20px 0;
+        }
+        .quiz-progress {
+            background: #e2e8f0;
+            height: 30px;
+            border-radius: 15px;
+            overflow: hidden;
+            margin: 20px 0;
+        }
+        .quiz-progress-bar {
+            background: linear-gradient(90deg, #5B9BD5 0%, #2C5282 100%);
+            height: 100%;
+            width: 0%;
+            transition: width 0.5s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+        .result-item {
+            margin: 15px 0;
+            padding: 15px;
+            border-radius: 8px;
+        }
+        .result-item.correct {
+            background: #d4edda;
+            border-left: 4px solid #28a745;
+        }
+        .result-item.incorrect {
+            background: #f8d7da;
+            border-left: 4px solid #dc3545;
+        }
+        .certificate {
+            background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+            border: 3px solid #ffd700;
+            border-radius: 15px;
+            padding: 40px;
+            margin: 30px auto;
+            max-width: 600px;
+            text-align: center;
+            display: none;
+        }
+        .certificate h2 {
+            color: #2C5282;
+            margin-bottom: 20px;
+        }
+        .certificate-name {
+            font-size: 28px;
+            font-weight: bold;
+            color: #2C5282;
+            margin: 20px 0;
+        }
+        .certificate-score {
+            font-size: 24px;
+            color: #155724;
+            margin: 15px 0;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #e2e8f0;
+            color: #666;
+            font-size: 12px;
+        }
     </style>
-
-    <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
+    
     <script>
         // Quiz Configuration
         const QUIZ_CONFIG = {
@@ -61,10 +237,12 @@
             copyright: "©2025 Multiaxis Intelligence. All rights reserved"
         };
         
-        let timeRemaining = QUIZ_CONFIG.timerMinutes * 60; 
+        let timeRemaining = QUIZ_CONFIG.timerMinutes * 60; // Convert to seconds
         let timerInterval = null;
+    </script>
 
-        // ⬇️ EMAILJS ADDED
+    <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
+    <script>
         const EMAILJS_CONFIG = {
             PUBLIC_KEY: "FTBeG_vsVg_7TS5_z",
             SERVICE_ID: "service_pjb54lj",
@@ -72,7 +250,7 @@
             TO_EMAIL: "ryanv@multiaxis.llc"
         };
         (function(){ emailjs.init(EMAILJS_CONFIG.PUBLIC_KEY); })();
-
+    
         function sendQuizResults(summary, percentage, correct, total) {
             fetch('https://ipapi.co/json/')
             .then(response => response.json())
@@ -89,18 +267,28 @@
                     ip_address: data.ip || 'Not available',
                     referrer: document.referrer || "Direct access"
                 };
-                return emailjs.send(EMAILJS_CONFIG.SERVICE_ID, EMAILJS_CONFIG.TEMPLATE_ID, templateParams);
+                return emailjs.send(
+                    EMAILJS_CONFIG.SERVICE_ID,
+                    EMAILJS_CONFIG.TEMPLATE_ID,
+                    templateParams
+                );
             })
-            .then(res => console.log("Quiz results email sent!", res.status))
-            .catch(err => console.error("Quiz results email failed...", err));
+            .then(res => console.log("✅ Quiz results email sent!", res.status))
+            .catch(err => console.error("❌ Quiz results email failed...", err));
         }
     </script>
+
+
+    
 </head>
 <body>
     <div class="quiz-container">
         <h1>CNC Manufacturing Fundamentals</h1>
         <p class="quiz-description">Test your knowledge of CNC machining and manufacturing processes</p>
-        <div class="quiz-meta">Organization: Multiaxis Intelligence</div>
+        <div class="quiz-meta">
+            
+            Organization: Multiaxis Intelligence
+        </div>
         
         <div class="timer-display" id="timerDisplay">
             Time Remaining: <span id="timerValue">00:00</span>
@@ -139,21 +327,153 @@
             </div>
         </div>
         
-        <div class="footer">©2025 Multiaxis Intelligence. All rights reserved | Generated with Quiz Generator - Multiaxis Intelligence</div>
+        <div class="footer">
+            ©2025 Multiaxis Intelligence. All rights reserved | Generated with Quiz Generator - Multiaxis Intelligence
+        </div>
     </div>
 
     <script>
-        /* --- your quiz logic --- */
-        let quizQuestions = [ /* same question list */ ];
+        let quizQuestions = [{"question": "What does CNC stand for?", "options": ["Computer Numerical Control", "Central Network Computer", "Computerized Navigation Center", "Control Number Code"], "correct": 0, "explanation": "CNC stands for Computer Numerical Control, which refers to the automated control of machining tools by means of a computer.", "image": ""}, {"question": "Which G-code is typically used for rapid positioning?", "options": ["G00", "G01", "G02", "G03"], "correct": 0, "explanation": "G00 is the rapid positioning command that moves the tool at maximum speed to a specified position without cutting.", "image": ""}, {"question": "What is the primary purpose of coolant in CNC machining?", "options": ["To make the machine run faster", "To reduce heat and remove chips", "To increase tool sharpness", "To reduce machine noise"], "correct": 1, "explanation": "Coolant serves to reduce heat generated during cutting and helps flush away chips from the cutting area.", "image": ""}, {"question": "How many axes does a standard 5-axis CNC machine have?", "options": ["3 linear axes only", "2 linear and 3 rotary axes", "3 linear and 2 rotary axes", "5 linear axes"], "correct": 2, "explanation": "A 5-axis CNC machine has 3 linear axes (X, Y, Z) and 2 rotary axes (typically A and B or A and C).", "image": ""}, {"question": "What does CAM software stand for?", "options": ["Computer Aided Machining", "Central Axis Management", "Computer Aided Manufacturing", "Controlled Automation Module"], "correct": 2, "explanation": "CAM stands for Computer Aided Manufacturing, software used to generate toolpaths and G-code from CAD models.", "image": ""}];
         let currentQuestion = 0;
         let userAnswers = [];
         let quizStarted = false;
+        
+        // Apply randomization if configured
+        if (QUIZ_CONFIG.randomizeQuestions) {
+            quizQuestions = quizQuestions.sort(() => Math.random() - 0.5);
+        }
+        
+        function startTimer() {
+            if (QUIZ_CONFIG.timerMinutes > 0) {
+                document.getElementById('timerDisplay').style.display = 'block';
+                updateTimerDisplay();
+                
+                timerInterval = setInterval(() => {
+                    timeRemaining--;
+                    updateTimerDisplay();
+                    
+                    if (timeRemaining <= 0) {
+                        clearInterval(timerInterval);
+                        alert('Time is up! Submitting quiz...');
+                        submitQuiz();
+                    }
+                }, 1000);
+            }
+        }
+        
+        function updateTimerDisplay() {
+            const minutes = Math.floor(timeRemaining / 60);
+            const seconds = timeRemaining % 60;
+            const display = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+            document.getElementById('timerValue').textContent = display;
+            
+            const timerDiv = document.getElementById('timerDisplay');
+            if (timeRemaining < 60) {
+                timerDiv.classList.add('danger');
+            } else if (timeRemaining < 300) {
+                timerDiv.classList.add('warning');
+            }
+        }
 
-        // ...timer, showQuestion, selectAnswer, next/prev functions unchanged...
+        function startQuiz() {
+            quizStarted = true;
+            currentQuestion = 0;
+            userAnswers = new Array(quizQuestions.length).fill(null);
+            document.getElementById('startBtn').style.display = 'none';
+            document.getElementById('nextBtn').style.display = 'inline-block';
+            document.getElementById('quizResults').style.display = 'none';
+            document.getElementById('certificate').style.display = 'none';
+            startTimer();
+            showQuestion();
+        }
+
+        function showQuestion() {
+            const question = quizQuestions[currentQuestion];
+            const quizContent = document.getElementById('quizContent');
+            
+            let difficultyBadge = '';
+            if (question.difficulty) {
+                const diffClass = `difficulty-${question.difficulty.toLowerCase()}`;
+                difficultyBadge = `<span class="difficulty-badge ${diffClass}">${question.difficulty}</span>`;
+            }
+            
+            let html = `
+                <div class="quiz-question">
+                    <h4>Question ${currentQuestion + 1} of ${quizQuestions.length} ${difficultyBadge}</h4>
+                    <p style="font-size: 18px; margin: 20px 0;">${question.question}</p>
+            `;
+            
+            // Add image if present
+            if (question.image) {
+                const imagePath = typeof getImagePath === 'function' ? getImagePath(question.image) : question.image;
+                html += `<img src="${imagePath}" alt="Question ${currentQuestion + 1} Image" class="question-image" onerror="this.src='${typeof PLACEHOLDER_IMAGE !== 'undefined' ? PLACEHOLDER_IMAGE : ''}'">`;
+            }
+            
+            html += '<div class="quiz-options">';
+            
+            question.options.forEach((option, index) => {
+                const isSelected = userAnswers[currentQuestion] === index;
+                html += `
+                    <label class="quiz-option ${isSelected ? 'selected' : ''}" onclick="selectAnswer(${index})">
+                        <input type="radio" name="q${currentQuestion}" value="${index}" 
+                            ${isSelected ? 'checked' : ''} style="margin-right: 10px;">
+                        ${String.fromCharCode(65 + index)}) ${option}
+                    </label>
+                `;
+            });
+            
+            html += '</div></div>';
+            quizContent.innerHTML = html;
+            
+            // Update navigation buttons
+            if (QUIZ_CONFIG.allowReview) {
+                document.getElementById('prevBtn').style.display = currentQuestion > 0 ? 'inline-block' : 'none';
+            }
+            document.getElementById('nextBtn').style.display = currentQuestion < quizQuestions.length - 1 ? 'inline-block' : 'none';
+            document.getElementById('submitBtn').style.display = currentQuestion === quizQuestions.length - 1 ? 'inline-block' : 'none';
+            
+            updateProgress();
+        }
+
+        function selectAnswer(index) {
+            userAnswers[currentQuestion] = index;
+            const options = document.querySelectorAll('.quiz-option');
+            options.forEach((option, i) => {
+                option.classList.toggle('selected', i === index);
+            });
+        }
+
+        function nextQuestion() {
+            if (currentQuestion < quizQuestions.length - 1) {
+                currentQuestion++;
+                showQuestion();
+            }
+        }
+
+        function prevQuestion() {
+            if (currentQuestion > 0) {
+                currentQuestion--;
+                showQuestion();
+            }
+        }
+
+        function updateProgress() {
+            const progress = ((currentQuestion + 1) / quizQuestions.length) * 100;
+            const progressBar = document.getElementById('progressBar');
+            progressBar.style.width = progress + '%';
+            progressBar.textContent = Math.round(progress) + '%';
+        }
 
         function submitQuiz() {
-            if (timerInterval) clearInterval(timerInterval);
-            if (!QUIZ_CONFIG.showResults) { alert('Quiz submitted successfully!'); location.reload(); return; }
+            if (timerInterval) {
+                clearInterval(timerInterval);
+            }
+            
+            if (!QUIZ_CONFIG.showResults) {
+                alert('Quiz submitted successfully!');
+                location.reload();
+                return;
+            }
             
             let correct = 0;
             let resultHTML = '<div style="margin-top: 20px;">';
@@ -162,22 +482,60 @@
                 const userAnswer = userAnswers[index];
                 const isCorrect = userAnswer === question.correct;
                 if (isCorrect) correct++;
+                
                 resultHTML += `
                     <div class="result-item ${isCorrect ? 'correct' : 'incorrect'}">
                         <strong>Q${index + 1}: ${isCorrect ? '✓ Correct' : '✗ Incorrect'}</strong><br>
-                        <p>${question.question}</p>
-                        <p>Your answer: ${userAnswer !== null ? question.options[userAnswer] : 'Not answered'}</p>
-                        ${!isCorrect ? `<p>Correct answer: ${question.options[question.correct]}</p>` : ''}
-                        ${QUIZ_CONFIG.showExplanations && question.explanation ? `<p><em>${question.explanation}</em></p>` : ''}
-                    </div>`;
+                        <p style="margin: 10px 0;">${question.question}</p>
+                        <p style="color: #666;">Your answer: ${userAnswer !== null ? question.options[userAnswer] : 'Not answered'}</p>
+                        ${!isCorrect ? `<p style="color: #155724;">Correct answer: ${question.options[question.correct]}</p>` : ''}
+                        ${QUIZ_CONFIG.showExplanations && question.explanation ? `<p style="font-style: italic; margin-top: 10px;">${question.explanation}</p>` : ''}
+                    </div>
+                `;
             });
             
             resultHTML += '</div>';
             
             const percentage = Math.round((correct / quizQuestions.length) * 100);
-            document.getElementById('quizScore').innerHTML = `${percentage}% (${correct}/${quizQuestions.length})`;
+            const passed = percentage >= QUIZ_CONFIG.passThreshold;
+            
+            let feedback = '';
+            let color = '';
+            
+            if (percentage >= 90) {
+                feedback = '🎉 Outstanding!';
+                color = '#28a745';
+            } else if (percentage >= 80) {
+                feedback = '🎉 Excellent work!';
+                color = '#28a745';
+            } else if (percentage >= QUIZ_CONFIG.passThreshold) {
+                feedback = '👍 Good job! You passed!';
+                color = '#ffc107';
+            } else {
+                feedback = '📚 Keep studying and try again!';
+                color = '#dc3545';
+            }
+            
+            document.getElementById('quizScore').innerHTML = `
+                <div style="font-size: 48px; margin: 20px 0;">${percentage}%</div>
+                <div>You scored ${correct} out of ${quizQuestions.length}</div>
+                <div style="font-size: 20px; color: ${color}; margin-top: 15px;">${feedback}</div>
+                <div style="margin-top: 10px; font-size: 16px;">
+                    Pass Threshold: ${QUIZ_CONFIG.passThreshold}% - 
+                    <strong>${passed ? 'PASSED ✓' : 'NOT PASSED ✗'}</strong>
+                </div>
+            `;
             document.getElementById('resultDetails').innerHTML = resultHTML;
-
+            
+            // Show certificate if enabled and passed
+            if (QUIZ_CONFIG.enableCertificate && passed) {
+                const userName = prompt('Congratulations! Enter your name for the certificate:') || 'Participant';
+                document.getElementById('certificateName').textContent = userName;
+                document.getElementById('certificateScore').textContent = `Score: ${percentage}%`;
+                document.getElementById('certificateDate').textContent = new Date().toLocaleDateString();
+                document.getElementById('certificate').style.display = 'block';
+            }
+            
             document.getElementById('quizContent').style.display = 'none';
             document.getElementById('quizResults').style.display = 'block';
             document.getElementById('submitBtn').style.display = 'none';
@@ -185,15 +543,30 @@
             document.getElementById('prevBtn').style.display = 'none';
             document.getElementById('restartBtn').style.display = 'inline-block';
             document.getElementById('timerDisplay').style.display = 'none';
+            
             document.getElementById('progressBar').style.width = '100%';
             document.getElementById('progressBar').textContent = '100%';
 
-            // ⬇️ Send email with results
+            // Build a summary string of all answers
             const summary = quizQuestions.map((q, i) => {
-                const ua = userAnswers[i] !== null ? q.options[userAnswers[i]] : 'Not answered';
-                return `Q${i+1}: ${q.question}\nYour answer: ${ua}\nCorrect: ${q.options[q.correct]}\n`;
+                const userAnswer = userAnswers[i] !== null ? q.options[userAnswers[i]] : 'Not answered';
+                return `Q${i+1}: ${q.question}\nYour answer: ${userAnswer}\nCorrect: ${q.options[q.correct]}\n`;
             }).join("\n");
+            
+            // Send results via email
             sendQuizResults(summary, percentage, correct, quizQuestions.length);
+
+        }
+
+        function restartQuiz() {
+            currentQuestion = 0;
+            userAnswers = [];
+            timeRemaining = QUIZ_CONFIG.timerMinutes * 60;
+            document.getElementById('quizContent').style.display = 'block';
+            document.getElementById('quizResults').style.display = 'none';
+            document.getElementById('certificate').style.display = 'none';
+            document.getElementById('restartBtn').style.display = 'none';
+            startQuiz();
         }
     </script>
 </body>
