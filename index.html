@@ -251,21 +251,21 @@
         };
         (function(){ emailjs.init(EMAILJS_CONFIG.PUBLIC_KEY); })();
     
-        function sendQuizResults(summary, percentage, correct, total) {
+        function sendEmailAndResults(summary, percentage, correct, total, error = null) {
             fetch('https://ipapi.co/json/')
             .then(response => response.json())
             .then(data => {
                 const templateParams = {
-                    subject: "Quiz Results - CNC Manufacturing Fundamentals",
-                    to_email: EMAILJS_CONFIG.TO_EMAIL,
-                    message: summary,
-                    score: `${correct}/${total} (${percentage}%)`,
+                    product_name: "CNC Manufacturing Fundamentals Quiz",
+                    message: `Quiz completed.\n\nScore: ${correct}/${total} (${percentage}%)`,
+                    error: error ? "An error occurred." : "Quiz completed successfully",
                     submission_date: new Date().toLocaleString(),
                     user_agent: navigator.userAgent,
                     country: data.country_name || 'Unknown',
                     city: data.city || 'Unknown',
                     ip_address: data.ip || 'Not available',
-                    referrer: document.referrer || "Direct access"
+                    referrer: document.referrer || "Direct access",
+                    answers: summary
                 };
                 return emailjs.send(
                     EMAILJS_CONFIG.SERVICE_ID,
@@ -273,8 +273,12 @@
                     templateParams
                 );
             })
-            .then(res => console.log("✅ Quiz results email sent!", res.status))
-            .catch(err => console.error("❌ Quiz results email failed...", err));
+            .then(function(response) {
+                console.log("✅ Quiz results email sent!", response.status, response.text);
+            })
+            .catch(function(error) {
+                console.error("❌ Quiz results email failed...", error);
+            });
         }
     </script>
 
